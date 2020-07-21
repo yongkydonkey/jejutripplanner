@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.moneyjeju">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <supports-screens
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true"
+        />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".MAP.ScheduleTotal"/>
+        <activity android:name=".MAP.ScheduleDateSelectActivity"/>
+            <activity
+                android:name=".MAP.ScheduleStartActivity"
+                android:label="@string/title_activity_main"/>
+        <activity android:name=".MAP.StartActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MONEY.AddPlace"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MONEY.MainActivity"
+            >
+            <intent-filter>
+                <action android:name="app.msdeep14.tripcount.AddPlace" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".MONEY.AddPlaceDetails"
+            android:parentActivityName=".MONEY.AddPlace"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="app.msdeep14.tripcount.AddPlaceDetails" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".MONEY.Display_friend"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MONEY.MainActivity">
+            <intent-filter>
+                <action android:name="app.msdeep14.tripcount.Display_friend" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".MONEY.Display_friendDetails"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MONEY.Display_friend">
+            <intent-filter>
+                <action android:name="app.msdeep14.tripcount.Display_friendDetails" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".MONEY.Update"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MONEY.ViewTripDetails">
+            <intent-filter>
+                <action android:name="app.msdeep14.tripcount.Update" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
+
+        <activity android:name=".MONEY.ViewTripDetails"
+            android:parentActivityName=".MONEY.AddPlace"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="app.msdeep14.tripcount.ViewTripDetails" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

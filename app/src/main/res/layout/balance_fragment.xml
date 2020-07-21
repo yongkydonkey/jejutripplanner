@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/list_above"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+    </ListView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000"
+        android:layout_below="@+id/list_above"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/txttot"
+        android:id="@+id/txtbal"
+        android:text="\t\t\t\t\t\t\t\t 여행비용을 1/n 하기 하려면 ? "
+        android:background="#e7e7e7"
+        android:textColor="#FF00"
+        android:textSize="22dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000"
+        android:layout_below="@+id/txtbal"></View>
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/list_above"
+        android:id="@+id/txttot"
+        android:text="총 금액 :"
+        android:background="#e7e7e7"
+        android:textColor="#FF00"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/txttot2"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/list_above"
+        android:layout_toRightOf="@id/txttot"
+        android:background="#e7e7e7"
+        android:text="얼마 "
+        android:textColor="@color/mr_cast_meta_default_background"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/txtavg"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/list_above"
+        android:layout_toRightOf="@id/txttot2"
+        android:background="#e7e7e7"
+        android:text="평균 "
+        android:textColor="#FF00"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/txtavg2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/list_above"
+        android:layout_toRightOf="@id/txtavg"
+        android:background="#e7e7e7"
+        android:text="얼마 "
+        android:textColor="@color/mr_cast_meta_default_background"
+        android:textSize="20dp" />
+
+    <ListView
+        android:id="@+id/list_below"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtbal">
+
+    </ListView>
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/status_group"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/rdescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="지출내용설명"
+            android:inputType="textFilter|textMultiLine"
+            android:maxLength="12"
+            android:textCursorDrawable="@drawable/cursorcolor" />
+
+        <RadioButton
+            android:id="@+id/given"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="OnRadioButtonClicked"
+            android:text="쓰다" />
+
+        <RadioButton
+            android:id="@+id/taken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="OnRadioButtonClicked"
+            android:text="받다" />
+
+        <EditText
+            android:id="@+id/ramount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:digits="0123456789"
+            android:hint="금액"
+            android:inputType="number"
+            android:maxLength="8"
+            android:textCursorDrawable="@drawable/cursorcolor" />
+
+    </RadioGroup>
+
+</RelativeLayout>
