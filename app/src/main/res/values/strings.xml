@@ -96,4 +96,8 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_schedule_total_map">Map</string>
+    <string name="title_activity_maps1111">Map</string>
+    <string name="title_activity_schedule_select">Map</string>
+    <string name="title_activity_tete">Map</string>
+    <string name="title_activity_test">Map</string>
 </resources>

@@ -4,19 +4,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.moneyjeju.R;
-
-import org.w3c.dom.Text;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -26,9 +25,12 @@ import java.util.Calendar;
 public class ScheduleTotal extends AppCompatActivity {
 
     String startDay,endDay,s_Start;
+    Spinner selectDate;
 
     ArrayList<ScheduleTotalDate> list=new ArrayList<ScheduleTotalDate>();
     ArrayList<TourSpotName> list2=new ArrayList<TourSpotName>();
+    ArrayList<String> date=new ArrayList<>();
+
     int position;
     long calDateDays;
 
@@ -41,6 +43,9 @@ public class ScheduleTotal extends AppCompatActivity {
         setContentView(R.layout.activity_schedule_total);
 
         LinearLayout llDetailFrame=findViewById(R.id.llDetailFrame);
+        selectDate=findViewById(R.id.selectDate);
+
+
 
         Intent intent=getIntent();
         startDay=intent.getStringExtra("startDay");
@@ -61,6 +66,10 @@ public class ScheduleTotal extends AppCompatActivity {
         last=new LinearLayout[c];
 
 
+
+
+
+
         for(int i=0;i<calDateDays;i++)
         {
             final int count=i;
@@ -69,6 +78,8 @@ public class ScheduleTotal extends AppCompatActivity {
 
             scheduleTotalDate.setDay(s_Start);
             list.add(scheduleTotalDate);
+
+            date.add(s_Start);
 
             LinearLayout test=new LinearLayout(this);
 
@@ -80,13 +91,9 @@ public class ScheduleTotal extends AppCompatActivity {
             txtDate.setText(s_Start);
             txtDate.setLayoutParams(params);
 
-
-
             last[i]=new LinearLayout(this);
             last[i].setOrientation(LinearLayout.VERTICAL);
             last[i].setLayoutParams(params);
-
-
 
             Button btnAdd=new Button(this);
             btnAdd.setText("추가");
@@ -96,7 +103,7 @@ public class ScheduleTotal extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent=new Intent(getApplicationContext(), com.example.moneyjeju.MAP.ScheduleStartActivity.class);
+                    Intent intent=new Intent(getApplicationContext(), ScheduleSelectActivity.class);
                     intent.putExtra("count",count);
                     startActivityForResult(intent,3);
                 }
@@ -118,6 +125,27 @@ public class ScheduleTotal extends AppCompatActivity {
 
         }
 
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, date);
+        selectDate.setAdapter(adapter);
+
+        selectDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectDate=date.get(position);
+                ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
+                scheduleTotalMap.selectDate(selectDate);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                String selectDate=date.get(0);
+                ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
+                scheduleTotalMap.selectDate(selectDate);
+
+            }
+        });
 
     }
 
@@ -161,6 +189,13 @@ public class ScheduleTotal extends AppCompatActivity {
             position=data.getIntExtra("position",0);
 
         }
+    }
+
+    public void scheduleFinish(View v){
+        Intent intent=new Intent(this,StartActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
     }
 
 }

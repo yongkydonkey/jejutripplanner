@@ -2,15 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.moneyjeju">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
-    <supports-screens
-        android:resizeable="true"
-        android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:anyDensity="true"
-        />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,12 +14,57 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MAP.ScheduleTotal"/>
-        <activity android:name=".MAP.ScheduleDateSelectActivity"/>
-            <activity
-                android:name=".MAP.ScheduleStartActivity"
-                android:label="@string/title_activity_main"/>
-        <activity android:name=".MAP.StartActivity"
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+
+        <activity
+            android:name=".MAP.ScheduleSelectActivity"
+            android:label="@string/title_activity_tete" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity android:name=".MAP.ScheduleTotal" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity android:name=".MAP.ScheduleDateSelectActivity" />
+        <activity
+            android:name=".MAP.ScheduleStartActivity"
+            android:label="@string/title_activity_main" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity
+            android:name=".MAP.StartActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,18 +72,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MONEY.AddPlace"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".MONEY.AddPlace"
             android:parentActivityName=".MONEY.MainActivity"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="app.msdeep14.tripcount.AddPlace" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MONEY.AddPlaceDetails"
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity
+            android:name=".MONEY.AddPlaceDetails"
             android:parentActivityName=".MONEY.AddPlace"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -51,41 +100,46 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MONEY.Display_friend"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MONEY.MainActivity">
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity
+            android:name=".MONEY.Display_friend"
+            android:parentActivityName=".MONEY.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="app.msdeep14.tripcount.Display_friend" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MONEY.Display_friendDetails"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MONEY.Display_friend">
+        <activity
+            android:name=".MONEY.Display_friendDetails"
+            android:parentActivityName=".MONEY.Display_friend"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="app.msdeep14.tripcount.Display_friendDetails" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MONEY.Update"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MONEY.ViewTripDetails">
+        <activity
+            android:name=".MONEY.Update"
+            android:parentActivityName=".MONEY.ViewTripDetails"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="app.msdeep14.tripcount.Update" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
-
-        <activity android:name=".MONEY.ViewTripDetails"
+        <activity
+            android:name=".MONEY.ViewTripDetails"
             android:parentActivityName=".MONEY.AddPlace"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -94,6 +148,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

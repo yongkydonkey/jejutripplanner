@@ -1,11 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <resources>
-    <!-- TODO: Before you run your application, you need a Google Maps API key. To get one, follow this link, follow the directions and press "Create" at the end: https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=A6:F6:E9:AE:63:CF:7F:86:19:45:79:6E:C5:2B:88:AD:2D:C3:9F:88%3Bcom.example.jejuplanningmap You can also add your credentials to an existing key, using these values: Package name: com.example.jejuplanningmap SHA-1 certificate fingerprint: A6:F6:E9:AE:63:CF:7F:86:19:45:79:6E:C5:2B:88:AD:2D:C3:9F:88 Alternatively, follow the directions here: https://developers.google.com/maps/documentation/android/start#get-key Once you have your key (it starts with "AIza"), replace the "google_maps_key" string in this file. -->
-    <string
-        translatable="false"
-        templateMergeStrategy="preserve"
-        name="google_maps_key">
-        AIzaSyCCzelYMP1kerBD0YrEcRhY3EITx7P78Vg
-    </string>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=5B:9B:1D:FA:13:92:6C:86:06:87:CA:C0:63:A8:7D:7E:FE:FD:DD:55%3Bcom.example.moneyjeju
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.example.moneyjeju
+
+    SHA-1 certificate fingerprint:
+    5B:9B:1D:FA:13:92:6C:86:06:87:CA:C0:63:A8:7D:7E:FE:FD:DD:55
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAQ_vqPCd4gKrR18NNY1voC5-j50uB6cn4</string>
 </resources>
