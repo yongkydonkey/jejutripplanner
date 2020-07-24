@@ -63,15 +63,16 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <activity
-            android:name=".MAP.StartActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".MAP.StartActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Login.RegisterActivity"/>
         <activity
             android:name=".MONEY.AddPlace"
             android:parentActivityName=".MONEY.MainActivity"
