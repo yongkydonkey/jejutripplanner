@@ -7,11 +7,12 @@
     tools:context=".MAP.StartActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtUserId"
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:background="#72D8E4"
-        android:text="미완성부분(로그인 시 닉네임 같은 것들이 보이게 수정)"
+        android:text="userId"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -22,26 +23,26 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ScheduleList"
         android:layout_width="0dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="2dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserId"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabScheduleAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
         android:clickable="true"
         android:onClick="FabScheduleAdd"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/txtUserId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.263"
+        app:layout_constraintVertical_bias="0.944"
         app:srcCompat="@drawable/ic_baseline_add_circle_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

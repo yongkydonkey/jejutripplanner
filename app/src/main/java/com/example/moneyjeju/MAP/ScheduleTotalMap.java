@@ -75,6 +75,6 @@ public class ScheduleTotalMap extends Fragment {
 
     public void selectDate(String date) {
         this.selectDate=date;
-        System.out.println(selectDate+"22");
+        //System.out.println(selectDate+"22");
     }
 }

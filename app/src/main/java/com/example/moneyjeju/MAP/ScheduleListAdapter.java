@@ -2,6 +2,7 @@ package com.example.moneyjeju.MAP;
 
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,13 @@ import java.util.ArrayList;
 public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapter.ViewHolder> {
 
     private ArrayList<com.example.moneyjeju.MAP.ScheduleDate> list;
+    private String userId;
 
 
-
-    public ScheduleListAdapter(ArrayList<com.example.moneyjeju.MAP.ScheduleDate> list) {
+    public ScheduleListAdapter(ArrayList<com.example.moneyjeju.MAP.ScheduleDate> list,String userId) {
         this.list=list;
+        this.userId=userId;
+
 
     }
 
@@ -43,6 +46,11 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
                  Intent intent=new Intent(itemView.getContext(), ScheduleTotal.class);
                  intent.putExtra("startDay",txtScheduleStartDate.getText());
                  intent.putExtra("endDay",txtScheduleEndDate.getText());
+                 intent.putExtra("userId",userId);
+
+                 int position=getAdapterPosition();
+                 intent.putExtra("planNo",position);
+
                  itemView.getContext().startActivity(intent);
                 }
             });
@@ -93,9 +101,6 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
 
         holder.txtScheduleStartDate.setText(list.get(position).getStartDate());
         holder.txtScheduleEndDate.setText(list.get(position).getEndDate());
-
-
-
 
 
     }

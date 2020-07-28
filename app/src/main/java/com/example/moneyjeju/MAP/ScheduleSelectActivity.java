@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ public class ScheduleSelectActivity extends FragmentActivity implements OnMapRea
     EditText etName;
     ArrayList<TourSpots> list;
     String name;
+    private String userId,planNo,date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,12 @@ public class ScheduleSelectActivity extends FragmentActivity implements OnMapRea
         mapFragment.getMapAsync(this);
 
         etName=findViewById(R.id.etName);
+
+        Intent intent=getIntent();
+        userId=intent.getStringExtra("userId");
+        planNo=intent.getStringExtra("planNo");
+        date=intent.getStringExtra("date");
+        System.out.println(date);
     }
 
 
@@ -64,7 +72,7 @@ public class ScheduleSelectActivity extends FragmentActivity implements OnMapRea
                 @Override
                 public boolean onMarkerClick(Marker marker) {
 
-                    com.example.moneyjeju.MAP.ScheduleDialog scheduleDialog = new com.example.moneyjeju.MAP.ScheduleDialog(list, name, marker);
+                    com.example.moneyjeju.MAP.ScheduleDialog scheduleDialog = new com.example.moneyjeju.MAP.ScheduleDialog(list, name, marker,userId,planNo,date);
                     scheduleDialog.show(getSupportFragmentManager(), null);
 
 

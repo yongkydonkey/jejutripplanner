@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 validateButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
                             }else{//사용할 수 없는 아이디라면
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("alreay used ID")
+                                dialog = builder.setMessage("already used ID")
                                         .setNegativeButton("OK", null)
                                         .create();
                                 dialog.show();

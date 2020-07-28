@@ -24,7 +24,8 @@ import java.util.Calendar;
 
 public class ScheduleTotal extends AppCompatActivity {
 
-    String startDay,endDay,s_Start;
+    String startDay,endDay,s_Start,userId,planNo;
+    int tempPlanNo;
     Spinner selectDate;
 
     ArrayList<ScheduleTotalDate> list=new ArrayList<ScheduleTotalDate>();
@@ -50,6 +51,11 @@ public class ScheduleTotal extends AppCompatActivity {
         Intent intent=getIntent();
         startDay=intent.getStringExtra("startDay");
         endDay=intent.getStringExtra("endDay");
+        userId=intent.getStringExtra("userId");
+        tempPlanNo=intent.getIntExtra("planNo",9999);
+        tempPlanNo=tempPlanNo+1;
+        planNo=Integer.toString(tempPlanNo);
+
 
         Date startDay1 = Date.valueOf(startDay);
         Date endDay1 = Date.valueOf(endDay);
@@ -64,10 +70,6 @@ public class ScheduleTotal extends AppCompatActivity {
         int c=(int)calDateDays;
 
         last=new LinearLayout[c];
-
-
-
-
 
 
         for(int i=0;i<calDateDays;i++)
@@ -105,6 +107,9 @@ public class ScheduleTotal extends AppCompatActivity {
 
                     Intent intent=new Intent(getApplicationContext(), ScheduleSelectActivity.class);
                     intent.putExtra("count",count);
+                    intent.putExtra("userId",userId);
+                    intent.putExtra("planNo",planNo);
+                    intent.putExtra("date",date.get(count));
                     startActivityForResult(intent,3);
                 }
             });
@@ -167,6 +172,9 @@ public class ScheduleTotal extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
+
+                    //삭제 Async
+
                    detail.removeAllViews();
                 }
             });
@@ -192,7 +200,12 @@ public class ScheduleTotal extends AppCompatActivity {
     }
 
     public void scheduleFinish(View v){
+
+
+
+
         Intent intent=new Intent(this,StartActivity.class);
+        intent.putExtra("userId",userId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
