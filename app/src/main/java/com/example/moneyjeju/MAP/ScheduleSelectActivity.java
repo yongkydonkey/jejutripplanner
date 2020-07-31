@@ -50,7 +50,7 @@ public class ScheduleSelectActivity extends FragmentActivity implements OnMapRea
         userId=intent.getStringExtra("userId");
         planNo=intent.getStringExtra("planNo");
         date=intent.getStringExtra("date");
-        System.out.println(date);
+
     }
 
 

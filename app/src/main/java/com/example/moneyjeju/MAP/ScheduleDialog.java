@@ -154,9 +154,6 @@ public class ScheduleDialog extends DialogFragment {
 
                 bufferedReader.close();
 
-                System.out.println(sb.toString().trim());
-
-
                 return sb.toString().trim();
             }
             catch (Exception e) {
