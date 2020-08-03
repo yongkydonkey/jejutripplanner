@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.example.moneyjeju.MONEY.MainActivity;
 import com.example.moneyjeju.R;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -178,14 +180,14 @@ public class ScheduleTotal extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectDate=date.get(position);
                 ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
-                scheduleTotalMap.selectDate(selectDate);
+                scheduleTotalMap.selectDate(userId,planNo,selectDate);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 String selectDate=date.get(0);
                 ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
-                scheduleTotalMap.selectDate(selectDate);
+                scheduleTotalMap.selectDate(userId,planNo,selectDate);
 
             }
         });
@@ -420,8 +422,6 @@ public class ScheduleTotal extends AppCompatActivity {
                 JSONObject item = jsonArray.getJSONObject(i);
 
                 String date = item.getString(TAG_DATE);
-
-
                 String tourSpotName = item.getString(TAG_TOURSPOTNAME);
 
                 scheduleDetailInit=new ScheduleDetailInit();
