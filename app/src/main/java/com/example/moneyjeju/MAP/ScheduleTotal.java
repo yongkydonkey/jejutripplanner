@@ -3,6 +3,8 @@ package com.example.moneyjeju.MAP;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,8 +22,10 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.moneyjeju.JejuApp;
 import com.example.moneyjeju.MONEY.MainActivity;
 import com.example.moneyjeju.R;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -63,13 +67,15 @@ public class ScheduleTotal extends AppCompatActivity {
 
     LinearLayout[] last;
     TextView[] txtDate;
-
+    JejuApp jejuApp;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_total);
+
+        jejuApp=(JejuApp) getApplicationContext();
 
         LinearLayout llDetailFrame=findViewById(R.id.llDetailFrame);
         selectDate=findViewById(R.id.selectDate);
@@ -82,6 +88,10 @@ public class ScheduleTotal extends AppCompatActivity {
         tempPlanNo=intent.getIntExtra("planNo",9999);
         tempPlanNo=tempPlanNo+1;
         planNo=Integer.toString(tempPlanNo);
+
+        jejuApp.userId=userId;
+        jejuApp.planNo=planNo;
+
 
 
         Date startDay1 = Date.valueOf(startDay);
@@ -179,20 +189,31 @@ public class ScheduleTotal extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectDate=date.get(position);
-                ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
-                scheduleTotalMap.selectDate(userId,planNo,selectDate);
+                jejuApp.selectDate=selectDate;
+               ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
+
+                scheduleTotalMap.SelectDate(selectDate);
+
+
+
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 String selectDate=date.get(0);
+                jejuApp.selectDate=selectDate;
                 ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
-                scheduleTotalMap.selectDate(userId,planNo,selectDate);
-
+                scheduleTotalMap.SelectDate(selectDate);
             }
         });
 
     }
+
+
+
+
+
 
     @Override
     protected void onResume() {

@@ -3,7 +3,10 @@ package com.example.moneyjeju.MAP;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.moneyjeju.JejuApp;
 import com.example.moneyjeju.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,8 +46,9 @@ public class ScheduleTotalMap extends Fragment {
     GoogleMap map;
     String userId,planNo,selectDate,JsonString;
     ArrayList<Location> list=new ArrayList<>();
-    PolylineOptions polylineOptions;
-    Polyline polyline;
+    JejuApp jejuApp;
+
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -58,8 +63,23 @@ public class ScheduleTotalMap extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+
+            jejuApp=(JejuApp) getActivity().getApplicationContext();
+            userId=jejuApp.userId;
+
+            planNo=jejuApp.planNo;
+
             map=googleMap;
+
+           jejuApp.map=map;
+
+
+
+
             LatLng Jeju = new LatLng(33.3809145, 126.53578739783740);
+
+
+
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(Jeju,10));
 
         }
@@ -78,6 +98,11 @@ public class ScheduleTotalMap extends Fragment {
         return view;
     }
 
+
+
+
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -87,19 +112,21 @@ public class ScheduleTotalMap extends Fragment {
 
 
         if (mapFragment != null) {
+
             mapFragment.getMapAsync(callback);
         }
     }
 
-
-    public void selectDate(String userId,String planNo,String date) {
-        this.userId=userId;
-        this.planNo=planNo;
-        this.selectDate=date;
-
+    public void SelectDate(String selectDate){
+        this.selectDate=selectDate;
+        userId=jejuApp.userId;
+        planNo=jejuApp.planNo;
         LocationGet locationGet=new LocationGet();
         locationGet.execute(URL,userId,planNo,selectDate);
+
     }
+
+
 
     private class LocationGet extends AsyncTask<String,Void,String>{
 
@@ -110,6 +137,7 @@ public class ScheduleTotalMap extends Fragment {
             String userId=strings[1];
             String planNo=strings[2];
             String selectDate=strings[3];
+
             String URL=strings[0];
             String errorString=null;
 
@@ -154,6 +182,8 @@ public class ScheduleTotalMap extends Fragment {
 
 
                 bufferedReader.close();
+
+
 
                 return sb.toString().trim();
 
@@ -214,6 +244,30 @@ public class ScheduleTotalMap extends Fragment {
 
             Log.d("LocationGet", "showResult : ", e);
         }
+
+
+
+        jejuApp.map.clear();
+
+        int count=list.size();
+
+
+
+
+        PolylineOptions polylineOptions=new PolylineOptions();
+        polylineOptions.clickable(true);
+
+
+        for(int i=0;i<count;i++){
+            LatLng latLng=new LatLng(Double.parseDouble(list.get(i).getLatitude()),Double.parseDouble(list.get(i).getLongitude()));
+            polylineOptions.add(latLng);
+        }
+
+
+
+       Polyline polyline=jejuApp.map.addPolyline(polylineOptions);
+        polyline.setColor(Color.RED);
+
 
 
     }

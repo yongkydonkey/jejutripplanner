@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moneyjeju.JejuApp;
 import com.example.moneyjeju.R;
 
 import java.sql.Date;
@@ -21,6 +22,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
 
     private ArrayList<com.example.moneyjeju.MAP.ScheduleDate> list;
     private String userId;
+
 
 
     public ScheduleListAdapter(ArrayList<com.example.moneyjeju.MAP.ScheduleDate> list,String userId) {
@@ -47,6 +49,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
                  intent.putExtra("startDay",txtScheduleStartDate.getText());
                  intent.putExtra("endDay",txtScheduleEndDate.getText());
                  intent.putExtra("userId",userId);
+
 
                  int position=getAdapterPosition();
                  intent.putExtra("planNo",position);
