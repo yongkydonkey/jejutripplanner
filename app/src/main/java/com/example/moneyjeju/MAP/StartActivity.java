@@ -18,8 +18,6 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.example.moneyjeju.Login.LoginSuccess;
-import com.example.moneyjeju.MONEY.AddPlace;
 import com.example.moneyjeju.MONEY.MainActivity;
 import com.example.moneyjeju.R;
 import com.squareup.timessquare.CalendarPickerView;
@@ -73,15 +71,6 @@ public class StartActivity extends AppCompatActivity {
 
         PlanInit planInit=new PlanInit();
         planInit.execute(URL,userID);
-
-    }
-
-    @Override
-    public void onBackPressed()
-    {
-        super.onBackPressed();
-        startActivity(new Intent(StartActivity.this, LoginSuccess.class));
-        finish();
 
     }
 
@@ -159,7 +148,6 @@ public class StartActivity extends AppCompatActivity {
                return null;}
 
        }
-
 
        @Override
        protected void onPreExecute() {

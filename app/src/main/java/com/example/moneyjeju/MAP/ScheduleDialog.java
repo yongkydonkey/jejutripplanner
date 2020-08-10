@@ -84,6 +84,7 @@ public class ScheduleDialog extends DialogFragment {
                 Intent intent2=new Intent();
                 intent2.putExtra("name",name);
                 intent2.putExtra("position",position);
+                intent2.putExtra("date",date);
                 getActivity().setResult(4,intent2);
                 getActivity().finish();
                 dismiss();

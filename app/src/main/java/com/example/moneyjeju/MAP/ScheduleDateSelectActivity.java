@@ -25,8 +25,10 @@ public class ScheduleDateSelectActivity extends AppCompatActivity {
 
     final static private String URL = "http://192.168.0.8/planschedulesave.php";
     Date start,end;
-    private String userId;
-    private int position;
+    private String userId,s_Start,s_End;
+    private int locate;
+    long startDay;
+    long endDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,7 @@ public class ScheduleDateSelectActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         userId=intent.getStringExtra("userId");
-        position=intent.getIntExtra("planNo",9999);
-        position=position+1;
-
+        locate=intent.getIntExtra("locate",9999);
 
 
 
@@ -66,28 +66,22 @@ public class ScheduleDateSelectActivity extends AppCompatActivity {
     public void ScheduleDateConfirm(View v){
 
 
-        Intent intent=new Intent();
-        long startDay=start.getTime();
-        long endDay=end.getTime();
+
+        startDay=start.getTime();
+        endDay=end.getTime();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String s_Start = dateFormat.format(start);
-        String s_End = dateFormat.format(end);
+       s_Start = dateFormat.format(start);
+        s_End = dateFormat.format(end);
 
+        String s_locate=Integer.toString(locate);
         PlanScheduleSave planScheduleSave=new PlanScheduleSave();
-        String planNo=Integer.toString(position);
-
-        planScheduleSave.execute(URL,userId,planNo,s_Start,s_End);
 
 
 
-       intent.putExtra("start",startDay);
+        planScheduleSave.execute(URL,userId,s_Start,s_End,s_locate);
 
-       intent.putExtra("end",endDay);
 
-        setResult(1,intent);
-
-        finish();
 
     }
 
@@ -98,14 +92,16 @@ public class ScheduleDateSelectActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             String userId = strings[1];
-            String planNo = strings[2];
-            String startDate=strings[3];
-            String endDate=strings[4];
+            String startDate=strings[2];
+            String endDate=strings[3];
+            String locate=strings[4];
+
+
 
             String URL = strings[0];
 
 
-            String postParameters = "userId=" + userId + "&planNo=" + planNo + "&startdate=" + startDate + "&enddate=" + endDate;
+            String postParameters = "userId=" + userId +"&startdate=" + startDate + "&enddate=" + endDate+ "&locate=" + locate;
 
             try{
                 java.net.URL url=new URL(URL);
@@ -121,8 +117,35 @@ public class ScheduleDateSelectActivity extends AppCompatActivity {
                 outputStream.flush();
                 outputStream.close();
 
+                InputStream inputStream;
 
-                return null;
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d("test", "response code - " + responseStatusCode);
+
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+
+                return sb.toString().trim();
+
             }
             catch (Exception e) {
                 return null;
@@ -139,6 +162,18 @@ public class ScheduleDateSelectActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            Intent intent=new Intent();
+
+            intent.putExtra("start",startDay);
+
+            intent.putExtra("end",endDay);
+
+            intent.putExtra("planNo",s);
+
+            setResult(1,intent);
+
+            finish();
         }
     }
 }

@@ -51,8 +51,7 @@ public class ScheduleTotal extends AppCompatActivity {
     private static final String TAG_JSON="webnautes";
     private static final String TAG_DATE = "date";
     private static final String TAG_TOURSPOTNAME = "tourspotname";
-    String startDay,endDay,s_Start,userId,planNo,JsonString;
-    int tempPlanNo;
+    String startDay,endDay,s_Start,userId,planNo,JsonString,adddate;
     Spinner selectDate;
 
 
@@ -85,13 +84,10 @@ public class ScheduleTotal extends AppCompatActivity {
         startDay=intent.getStringExtra("startDay");
         endDay=intent.getStringExtra("endDay");
         userId=intent.getStringExtra("userId");
-        tempPlanNo=intent.getIntExtra("planNo",9999);
-        tempPlanNo=tempPlanNo+1;
-        planNo=Integer.toString(tempPlanNo);
+        planNo=intent.getStringExtra("planNo");
 
         jejuApp.userId=userId;
         jejuApp.planNo=planNo;
-
 
 
         Date startDay1 = Date.valueOf(startDay);
@@ -113,10 +109,6 @@ public class ScheduleTotal extends AppCompatActivity {
 
         PlanDetailInit planDetailInit=new PlanDetailInit();
         planDetailInit.execute(INIT_URL,userId,planNo);
-
-
-
-
 
 
         for(int i=0;i<calDateDays;i++)
@@ -190,30 +182,21 @@ public class ScheduleTotal extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectDate=date.get(position);
                 jejuApp.selectDate=selectDate;
-               ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
-
+                ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
                 scheduleTotalMap.SelectDate(selectDate);
-
-
 
             }
 
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                String selectDate=date.get(0);
-                jejuApp.selectDate=selectDate;
+                String selectDate=jejuApp.startDate;
                 ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
                 scheduleTotalMap.SelectDate(selectDate);
             }
         });
 
     }
-
-
-
-
-
 
     @Override
     protected void onResume() {
@@ -241,6 +224,9 @@ public class ScheduleTotal extends AppCompatActivity {
                         if(detail.getParent().getParent()==txtDate[i].getParent()){
 
                             deleteDate=txtDate[i].getText().toString();
+
+
+
                         }
 
                     }
@@ -249,11 +235,16 @@ public class ScheduleTotal extends AppCompatActivity {
                    planDetailDelete.execute(DELETE_URL,userId,planNo,deleteDate,txtTourName.getText().toString());
 
                    detail.removeAllViews();
+
+                    ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
+                    scheduleTotalMap.SelectDate(deleteDate);
                 }
             });
 
 
             last[position].addView(detail);
+            ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
+            scheduleTotalMap.SelectDate(adddate);
 
         }
     }
@@ -268,6 +259,7 @@ public class ScheduleTotal extends AppCompatActivity {
             tourSpotName.setName(data.getStringExtra("name"));
             list2.add(tourSpotName);
             position=data.getIntExtra("position",0);
+            adddate=data.getStringExtra("date");
 
         }
     }
@@ -276,7 +268,7 @@ public class ScheduleTotal extends AppCompatActivity {
 
         Intent intent=new Intent(this,StartActivity.class);
         intent.putExtra("id",userId);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        jejuApp.startDate=null;
         startActivity(intent);
 
     }
@@ -500,10 +492,16 @@ public class ScheduleTotal extends AppCompatActivity {
                             planDetailDelete.execute(DELETE_URL,userId,planNo,deleteDate,txtTourName.getText().toString());
 
                             detail.removeAllViews();
+                            ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
+                            scheduleTotalMap.SelectDate(deleteDate);
+
+
                         }
                     });
 
                     last[j].addView(detail);
+                    ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
+                    scheduleTotalMap.SelectDate(adddate);
                 }
             }
         }
