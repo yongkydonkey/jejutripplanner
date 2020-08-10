@@ -1,7 +1,12 @@
 package com.example.moneyjeju.Login;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,12 +22,27 @@ import com.android.volley.toolbox.Volley;
 import com.example.moneyjeju.MAP.StartActivity;
 import com.example.moneyjeju.MONEY.MainActivity;
 import com.example.moneyjeju.R;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
 
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity {
 
     private AlertDialog dialog;
+    private CallbackManager callbackManager;
+    LoginButton loginButton_facebook;
+    private String userID;
 
 
 
@@ -48,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String userID = idText.getText().toString();
+                userID = idText.getText().toString();
                 String userPassword = passwordText.getText().toString();
                 Response.Listener<String> responseListener = new Response.Listener<String>(){
                     @Override
@@ -88,6 +108,46 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
+        callbackManager = CallbackManager.Factory.create();
+        loginButton_facebook = findViewById(R.id.login_button);
+        loginButton_facebook.setReadPermissions("email");
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        GraphRequest graphRequest
+                                = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken()
+                                , new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        Log.v("result", object.toString());
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender,birthday");
+                        graphRequest.setParameters(parameters);
+                        graphRequest.executeAsync();
+                        Intent intent = new Intent(LoginActivity.this, LoginSuccess.class);
+                        intent.putExtra("id",userID);
+                        LoginActivity.this.startActivity(intent);
+                        finish();
+                    }
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
     @Override
     protected void onStop(){

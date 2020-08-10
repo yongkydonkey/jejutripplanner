@@ -1,7 +1,12 @@
 package com.example.moneyjeju.Login;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
@@ -12,6 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.moneyjeju.MAP.StartActivity;
 import com.example.moneyjeju.MONEY.AddPlace;
 import com.example.moneyjeju.R;
+import com.facebook.CallbackManager;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginSuccess extends AppCompatActivity {
     private String userID;
