@@ -5,22 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
+import android.app.Application;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.PrecomputedText;
+
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
+
 import android.widget.TextView;
 
-import com.example.moneyjeju.MONEY.MainActivity;
 import com.example.moneyjeju.R;
-import com.squareup.timessquare.CalendarPickerView;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,9 +30,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
+
 
 public class StartActivity extends AppCompatActivity {
 
@@ -48,6 +43,7 @@ public class StartActivity extends AppCompatActivity {
     private static final String TAG_STARTDATE ="startdate";
     private static final String TAG_ENDDATE ="enddate";
     private String userID;
+    private Application application;
 
 
     Intent intent = null;
@@ -68,9 +64,9 @@ public class StartActivity extends AppCompatActivity {
         userID=intent.getStringExtra("id");
         TextView txtUserID=findViewById(R.id.txtUserId);
         txtUserID.setText(userID+"환영합니다.");
-
         PlanInit planInit=new PlanInit();
         planInit.execute(URL,userID);
+        application=getApplication();
 
     }
 
@@ -79,7 +75,7 @@ public class StartActivity extends AppCompatActivity {
 
         intent = new Intent(getApplicationContext(), com.example.moneyjeju.MAP.ScheduleDateSelectActivity.class);
         intent.putExtra("userId",userID);
-        intent.putExtra("planNo",list.size());
+        intent.putExtra("locate",list.size());
         startActivityForResult(intent, 0);
 
     }
@@ -95,6 +91,7 @@ public class StartActivity extends AppCompatActivity {
            String userId=strings[1];
 
            String postParameters = "userId=" + userId;
+
 
 
            try{
@@ -115,7 +112,7 @@ public class StartActivity extends AppCompatActivity {
                InputStream inputStream;
 
                int responseStatusCode = httpURLConnection.getResponseCode();
-               Log.d(TAG, "response code - " + responseStatusCode);
+               Log.d("test", "response code - " + responseStatusCode);
 
                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
                    inputStream = httpURLConnection.getInputStream();
@@ -208,7 +205,7 @@ public class StartActivity extends AppCompatActivity {
             recyclerView.setHasFixedSize(true);
             layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
-            scheduleListAdapter = new com.example.moneyjeju.MAP.ScheduleListAdapter(list,userID);
+            scheduleListAdapter = new com.example.moneyjeju.MAP.ScheduleListAdapter(list,userID,application);
             recyclerView.setAdapter(scheduleListAdapter);
 
         } catch (JSONException e) {
@@ -236,9 +233,13 @@ public class StartActivity extends AppCompatActivity {
             Date EndDate = new Date(L_EndDate);
             s_EndDate = dateFormat.format(EndDate);
 
+            String PlanNo=data.getStringExtra("planNo");
+
 
 
             com.example.moneyjeju.MAP.ScheduleDate scheduleDate=new com.example.moneyjeju.MAP.ScheduleDate();
+            scheduleDate.setId(userID);
+            scheduleDate.setPlanNo(PlanNo);
             scheduleDate.setStartDate(s_StartDate);
             scheduleDate.setEndDate(s_EndDate);
 
@@ -249,7 +250,7 @@ public class StartActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        scheduleListAdapter = new com.example.moneyjeju.MAP.ScheduleListAdapter(list,userID);
+        scheduleListAdapter = new com.example.moneyjeju.MAP.ScheduleListAdapter(list,userID,application);
         recyclerView.setAdapter(scheduleListAdapter);
     }
 }

@@ -121,22 +121,24 @@ public class ScheduleTotalMap extends Fragment {
         this.selectDate=selectDate;
         userId=jejuApp.userId;
         planNo=jejuApp.planNo;
-        LocationGet locationGet=new LocationGet();
-        locationGet.execute(URL,userId,planNo,selectDate);
 
+
+        if(selectDate!=null){
+            LocationGet locationGet=new LocationGet();
+            locationGet.execute(URL,userId,planNo,selectDate);
+        }
     }
 
 
 
     private class LocationGet extends AsyncTask<String,Void,String>{
 
-
-
         @Override
         protected String doInBackground(String... strings) {
             String userId=strings[1];
             String planNo=strings[2];
             String selectDate=strings[3];
+
 
             String URL=strings[0];
             String errorString=null;

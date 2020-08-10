@@ -9,6 +9,7 @@ public class JejuApp extends Application {
     public static String planNo=null;
     public static String selectDate=null;
     public static GoogleMap map=null;
+    public static String startDate=null;
 
 
     @Override
