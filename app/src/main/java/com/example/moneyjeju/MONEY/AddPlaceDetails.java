@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,7 +20,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.moneyjeju.Login.LoginActivity;
+import com.example.moneyjeju.Login.RegisterActivity;
+import com.example.moneyjeju.Login.RegisterRequest;
+import com.example.moneyjeju.MAP.StartActivity;
 import com.example.moneyjeju.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,29 +44,40 @@ public class AddPlaceDetails extends AppCompatActivity {
     private static Button btn;
     private static Button b1;
     private static Button btnadd;
+    final String COL_2 = "place_name";
+    final String COL_3 = "date_go";
+    final String COL_4 = "friend_no";
+    final String table = "Trip_details";
     public DatePickerDialog datepick = null;
-    SQLiteDatabase db1=null;
-    EditText e1,e2;
-    Editable d1,d2=null;
-    TextView edtDob=null;
+    SQLiteDatabase db1 = null;
+    EditText e1, e2;
+    Editable d1, d2 = null;
+    TextView edtDob = null;
     TextView edtxt;
     EditText f_add;
     EditText num;
-    int check=0;
-    ArrayList<String> fname= new ArrayList<String>();
-    int size=0;
+    String user_id;
+    int check = 0;
+    ArrayList<String> fname = new ArrayList<String>();
+    int size = 0;
+    public static final String URL_SAVE_NAME = "http://192.168.0.8/sqltomysql.php";
+    private DatabaseHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_details);
+        db = new DatabaseHelper(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         btn = (Button) findViewById(R.id.button_SUBMIT);
-        edtxt=(TextView) findViewById(R.id.daye);
-        btnadd=(Button)findViewById(R.id.add_btn);
-        b1= (Button) findViewById(R.id.daypickbut);
-        f_add=(EditText)findViewById(R.id.friend_name);
-        num=(EditText)findViewById(R.id.editno);
+        edtxt = (TextView) findViewById(R.id.daye);
+        btnadd = (Button) findViewById(R.id.add_btn);
+        b1 = (Button) findViewById(R.id.daypickbut);
+        f_add = (EditText) findViewById(R.id.friend_name);
+        num = (EditText) findViewById(R.id.editno);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("userID");
         OnClickpickDate();
         OnClickButtonSubmit();
         setTitle("New Trip");
@@ -59,38 +85,36 @@ public class AddPlaceDetails extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(AddPlaceDetails.this, AddPlace.class));
         finish();
     }
 
-    public void OnClickpickDate(){
-        try{
-            b1.setOnClickListener(new View.OnClickListener(){
+    public void OnClickpickDate() {
+        try {
+            b1.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
                     datepick = new DatePickerDialog(v.getContext(), (DatePickerDialog.OnDateSetListener) new DatePickHandler(), Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
                     datepick.show();
                 }
             });
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "불가능한 날짜", Toast.LENGTH_SHORT).show();
         }
     }
 
     public class DatePickHandler implements DatePickerDialog.OnDateSetListener {
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            int months = month+1;
-            if((months<10)&&(day<10))
+            int months = month + 1;
+            if ((months < 10) && (day < 10))
                 edtxt.setText(year + "-0" + (months) + "-0" + day);
-            else if((months<10)&&(day>10))
+            else if ((months < 10) && (day > 10))
                 edtxt.setText(year + "-0" + (months) + "-" + day);
-            else if((months>10)&&(day<10))
+            else if ((months > 10) && (day < 10))
                 edtxt.setText(year + "-" + (months) + "-0" + day);
             else
                 edtxt.setText(year + "-" + (months) + "-" + day);
@@ -98,10 +122,10 @@ public class AddPlaceDetails extends AppCompatActivity {
         }
     }
 
-    void OnClickButtonSubmit(){
-        e1=(EditText)findViewById(R.id.Textadd);
-        e2=(EditText)findViewById(R.id.editno);
-        edtDob=(TextView) findViewById(R.id.daye);
+    void OnClickButtonSubmit() {
+        e1 = (EditText) findViewById(R.id.Textadd);
+        e2 = (EditText) findViewById(R.id.editno);
+        edtDob = (TextView) findViewById(R.id.daye);
         btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -112,24 +136,20 @@ public class AddPlaceDetails extends AppCompatActivity {
                         String dd = edtDob.getText().toString();
                         String s1 = d1.toString().toLowerCase();
                         String s2 = d2.toString();
-                        s1=s1.trim();
-                        s2=s2.trim();
+                        s1 = s1.trim();
+                        s2 = s2.trim();
 
                         try {
                             db1.execSQL("CREATE TABLE IF NOT EXISTS Trip_details (id INTEGER PRIMARY KEY AUTOINCREMENT ,place_name TEXT NOT NULL, date_go DATE NOT NULL," + " friend_no INTEGER NOT NULL DEFAULT 0);");
-                            String COL_2 = "place_name";
-                            String COL_3 = "date_go";
-                            String COL_4="friend_no";
-                            String table = "Trip_details";
                             //check if any of the fields is not empty or friend no is not equal to zero
-                            if (s1.matches("") || s2.matches("") || dd.matches("") || Integer.parseInt(s2)==0)
+                            if (s1.matches("") || s2.matches("") || dd.matches("") || Integer.parseInt(s2) == 0)
                                 throw new ArithmeticException("Inadequate details..\nEnter Again");
-                            ContentValues contentValues = new ContentValues();
+                            final ContentValues contentValues = new ContentValues();
                             contentValues.put(COL_2, d1.toString().toLowerCase());
                             contentValues.put(COL_2, d1.toString().toLowerCase());
                             contentValues.put(COL_3, dd);
                             contentValues.put(COL_4, Integer.parseInt(num.getText().toString()));
-                            int x= Integer.parseInt(num.getText().toString());
+                            int x = Integer.parseInt(num.getText().toString());
 
                             try {
                                 Cursor c = db1.rawQuery("SELECT * FROM Trip_details ORDER BY date_go DESC;", null);
@@ -149,8 +169,6 @@ public class AddPlaceDetails extends AppCompatActivity {
                                 try {
                                     if (check == Integer.parseInt(num.getText().toString())) {
                                         long result = db1.insert(table, null, contentValues);
-
-
 
 
                                         if (result != -1) {
@@ -173,6 +191,7 @@ public class AddPlaceDetails extends AppCompatActivity {
                             } catch (Exception e) {
                                 Toast.makeText(getApplicationContext(), "여행 이름이 이미 등록됨", Toast.LENGTH_LONG).show();
                             }
+
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Inadequate details..\n" +
                                     "Enter Again", Toast.LENGTH_LONG).show();
@@ -183,7 +202,8 @@ public class AddPlaceDetails extends AppCompatActivity {
         );
     }
 
-    public void OnClickButtonAddFriend(){
+
+    public void OnClickButtonAddFriend() {
         btnadd.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -220,20 +240,20 @@ public class AddPlaceDetails extends AppCompatActivity {
                                     //exception
                                     try {
                                         String y = f_add.getText().toString();
-                                        y=y.toLowerCase();
-                                        int flag1=0;
+                                        y = y.toLowerCase();
+                                        int flag1 = 0;
                                         if (y.matches(""))
                                             throw new ArithmeticException("Inadequate details..\nEnter Again");
 
                                         //check if friend name is alrealy included in the list
-                                        for(int i=0;i<fname.size();i++){
-                                            if(y.matches(fname.get(i))){
-                                                Toast.makeText(getApplicationContext(),y+" 이미 포함되어 있음", Toast.LENGTH_SHORT).show();
-                                                flag1=1;
+                                        for (int i = 0; i < fname.size(); i++) {
+                                            if (y.matches(fname.get(i))) {
+                                                Toast.makeText(getApplicationContext(), y + " 이미 포함되어 있음", Toast.LENGTH_SHORT).show();
+                                                flag1 = 1;
                                                 break;
                                             }
                                         }
-                                        if(flag1==0) {
+                                        if (flag1 == 0) {
                                             contentValues.put(COL_2, y);
                                             fname.add(y);
                                             size++;
@@ -250,9 +270,7 @@ public class AddPlaceDetails extends AppCompatActivity {
                             } else {
                                 Toast.makeText(getApplicationContext(), "등록 인원 초과", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Inadequate details..\n" +
                                     "Enter Again", Toast.LENGTH_SHORT).show();
                         }
@@ -270,4 +288,19 @@ public class AddPlaceDetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    Response.Listener<String> responseListener = new Response.Listener<String>() {
+
+        @Override
+        public void onResponse(String response) {
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                Trip_detailsRequest registerRequest = new Trip_detailsRequest(user_id, COL_2, COL_3, COL_4, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(AddPlaceDetails.this);
+                queue.add(registerRequest);
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    };
 }

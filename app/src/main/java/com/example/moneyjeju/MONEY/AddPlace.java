@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moneyjeju.Login.LoginSuccess;
 import com.example.moneyjeju.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -87,7 +88,7 @@ public class AddPlace extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(AddPlace.this, MainActivity.class));
+        startActivity(new Intent(AddPlace.this, LoginSuccess.class));
         finish();
 
     }

@@ -19,6 +19,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 * */
 public class MainActivity extends AppCompatActivity {
 
+    public static final String URL = "http://192.168.0.8/Sqliteapi.php";
+    private DatabaseHelper db;
+
     FloatingActionButton ab;
     Button btnt;
     Button btnd;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         OnButtonTransClicked();
         OnaboutClicked();
 
+        db = new DatabaseHelper(this);
     }
     //dialog box to display aboutus
     public void OnaboutClicked(){
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent= new Intent(MainActivity.this,AddPlace.class);
+                        intent.putExtra("id","abcd");
                         startActivity(intent);
                         finish();
                     }
