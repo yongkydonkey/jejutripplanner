@@ -32,15 +32,13 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
     private ArrayList<com.example.moneyjeju.MAP.ScheduleDate> list;
     private String userId;
     private String planNo;
-    private Application application;
 
 
 
-    public ScheduleListAdapter(ArrayList<com.example.moneyjeju.MAP.ScheduleDate> list, String userId, Application application) {
+
+    public ScheduleListAdapter(ArrayList<com.example.moneyjeju.MAP.ScheduleDate> list, String userId) {
         this.list=list;
         this.userId=userId;
-        this.application=application;
-
     }
 
     public class ViewHolder extends  RecyclerView.ViewHolder{
@@ -82,9 +80,6 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
                 public void onClick(View view) {
                  Intent intent=new Intent(itemView.getContext(), ScheduleTotal.class);
                  intent.putExtra("startDay",txtScheduleStartDate.getText().toString());
-                 JejuApp jejuApp=(JejuApp) application.getApplicationContext();
-                 jejuApp.startDate=txtScheduleStartDate.getText().toString();
-
                  intent.putExtra("endDay",txtScheduleEndDate.getText().toString());
                  intent.putExtra("userId",userId);
                  planNo=list.get(getAdapterPosition()).getPlanNo();

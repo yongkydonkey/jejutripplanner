@@ -190,7 +190,7 @@ public class ScheduleTotal extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                String selectDate=jejuApp.startDate;
+                String selectDate=date.get(0);
                 ScheduleTotalMap scheduleTotalMap=new ScheduleTotalMap();
                 scheduleTotalMap.SelectDate(selectDate);
             }
@@ -268,7 +268,7 @@ public class ScheduleTotal extends AppCompatActivity {
 
         Intent intent=new Intent(this,StartActivity.class);
         intent.putExtra("id",userId);
-        jejuApp.startDate=null;
+
         startActivity(intent);
 
     }
