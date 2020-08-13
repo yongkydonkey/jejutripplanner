@@ -62,8 +62,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         Intent intent=getIntent();
         userID=intent.getStringExtra("id");
-        TextView txtUserID=findViewById(R.id.txtUserId);
-        txtUserID.setText(userID+"환영합니다.");
+System.out.println("541655616"+userID);
         PlanInit planInit=new PlanInit();
         planInit.execute(URL,userID);
         application=getApplication();

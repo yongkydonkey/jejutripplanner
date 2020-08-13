@@ -23,6 +23,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -262,6 +264,8 @@ public class ScheduleTotalMap extends Fragment {
 
         for(int i=0;i<count;i++){
             LatLng latLng=new LatLng(Double.parseDouble(list.get(i).getLatitude()),Double.parseDouble(list.get(i).getLongitude()));
+            Marker marker=jejuApp.map.addMarker(new MarkerOptions().position(latLng)
+                                                                    .title(""+(i+1)));
             polylineOptions.add(latLng);
         }
 

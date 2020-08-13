@@ -39,7 +39,7 @@ public class Update extends AppCompatActivity {
         Intent in=getIntent();
         Bundle bundle=in.getExtras();
         p=bundle.getString("id");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // onBackPressed();
         setTitle("New expense");
         final String sp="f"+p;

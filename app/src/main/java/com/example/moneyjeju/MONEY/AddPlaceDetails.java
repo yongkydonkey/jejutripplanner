@@ -68,7 +68,9 @@ public class AddPlaceDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_details);
         db = new DatabaseHelper(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         btn = (Button) findViewById(R.id.button_SUBMIT);
         edtxt = (TextView) findViewById(R.id.daye);
         btnadd = (Button) findViewById(R.id.add_btn);

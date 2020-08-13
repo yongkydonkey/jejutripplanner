@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moneyjeju.Login.LoginSuccess;
+import com.example.moneyjeju.MainPageActivity;
 import com.example.moneyjeju.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -61,7 +62,7 @@ public class AddPlace extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         fillActivity();
         fb=(FloatingActionButton)findViewById(R.id.mynew);
@@ -88,7 +89,7 @@ public class AddPlace extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(AddPlace.this, LoginSuccess.class));
+        startActivity(new Intent(AddPlace.this, MainPageActivity.class));
         finish();
 
     }
@@ -154,7 +155,9 @@ public class AddPlace extends AppCompatActivity {
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
                 MenuInflater inflater = actionMode.getMenuInflater();
-                inflater.inflate(R.menu.my_context_menu, menu);
+                MenuInflater inflater1=new MenuInflater(getApplicationContext());
+
+                inflater1.inflate(R.menu.my_context_menu, menu);
 
                 return true;
             }

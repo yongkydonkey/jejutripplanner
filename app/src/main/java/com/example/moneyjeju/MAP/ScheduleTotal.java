@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 
 import com.example.moneyjeju.JejuApp;
 import com.example.moneyjeju.MONEY.MainActivity;
+import com.example.moneyjeju.MainPageActivity;
 import com.example.moneyjeju.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -132,6 +135,8 @@ public class ScheduleTotal extends AppCompatActivity {
             txtDate[i]=new TextView(this);
 
             txtDate[i].setText(s_Start);
+            txtDate[i].setTypeface(txtDate[i].getTypeface(), Typeface.BOLD);
+
             txtDate[i].setLayoutParams(params);
 
             last[i]=new LinearLayout(this);
@@ -140,6 +145,8 @@ public class ScheduleTotal extends AppCompatActivity {
 
             Button btnAdd=new Button(this);
             btnAdd.setText("추가");
+
+
             btnAdd.setLayoutParams(params);
 
             btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -210,6 +217,8 @@ public class ScheduleTotal extends AppCompatActivity {
 
 
             final LinearLayout detail = (LinearLayout) inflater.inflate(R.layout.schedule_item_detail, null, false);
+
+
             final TextView txtTourName = detail.findViewById(R.id.txtTourName);
             txtTourName.setText(list2.get(list2.size() - 1).getName());
 
@@ -266,8 +275,9 @@ public class ScheduleTotal extends AppCompatActivity {
 
     public void scheduleFinish(View v){
 
-        Intent intent=new Intent(this,StartActivity.class);
+        Intent intent=new Intent(this, MainPageActivity.class);
         intent.putExtra("id",userId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         startActivity(intent);
 
@@ -463,6 +473,8 @@ public class ScheduleTotal extends AppCompatActivity {
 
 
                     final LinearLayout detail = (LinearLayout) inflater.inflate(R.layout.schedule_item_detail, null, false);
+
+
                     final TextView txtTourName = detail.findViewById(R.id.txtTourName);
 
 

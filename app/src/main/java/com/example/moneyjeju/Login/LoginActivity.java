@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.moneyjeju.MAP.StartActivity;
 import com.example.moneyjeju.MONEY.MainActivity;
+import com.example.moneyjeju.MainPageActivity;
 import com.example.moneyjeju.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -82,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                                         .setPositiveButton("확인", null)
                                         .create();
                                 dialog.show();
-                                Intent intent = new Intent(LoginActivity.this, LoginSuccess.class);
+                                Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
                                 intent.putExtra("id",userID);
                                 LoginActivity.this.startActivity(intent);
                                 finish();
@@ -92,9 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                                         .setNegativeButton("다시시도", null)
                                         .create();
                                 dialog.show();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                LoginActivity.this.startActivity(intent);
-                                finish();
+
                             }
                         }catch (Exception e){
                             e.printStackTrace();

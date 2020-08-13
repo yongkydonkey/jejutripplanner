@@ -99,36 +99,7 @@ public class ScheduleSelectActivity extends FragmentActivity implements OnMapRea
             }
         }
 
-        @Override
-        public void onBackPressed() {
-            //super.onBackPressed(); // 뒤로가기 버튼 막기 -> 인트로 화면을 다시 볼 필요가 없음.
 
-            if(System.currentTimeMillis() > backKeyPressedTime+2000){
-                backKeyPressedTime=System.currentTimeMillis();
-                Toast.makeText(this,"\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if(System.currentTimeMillis() <= backKeyPressedTime+2000){
-                AlertDialog.Builder builder=new AlertDialog.Builder(this);
-                builder.setMessage("종료하시겠습니까?");
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
-
-                builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        return;
-                    }
-                });
-                builder.setTitle("프로그램 종료");
-                builder.show();
-            }
-        }
 
         private ArrayList<TourSpots> xmlParser(){
             ArrayList<TourSpots> arrayList=new ArrayList<TourSpots>();
