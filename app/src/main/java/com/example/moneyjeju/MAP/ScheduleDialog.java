@@ -3,6 +3,9 @@ package com.example.moneyjeju.MAP;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +25,7 @@ import com.example.moneyjeju.R;
 import com.google.android.gms.maps.model.Marker;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -57,14 +62,31 @@ public class ScheduleDialog extends DialogFragment {
         final TextView txtName=view.findViewById(R.id.txtName);
         txtName.setText(marker.getTitle());
         TextView txtInfo=view.findViewById(R.id.txtInfo);
+        ImageView imageView=view.findViewById(R.id.imageView);
+        AssetManager assetManager= getResources().getAssets();
+        InputStream inputStream=null;
         for(int i=0;i<list.size();i++)
         {
             if(marker.getTitle().equals(list.get(i).getName()))
             {
                 txtInfo.setText(list.get(i).getInformation());
+                String fileName=i+".jpg";
+                try {
+                    inputStream=assetManager.open(fileName);
+                    Bitmap bm = BitmapFactory.decodeStream(inputStream) ;
+                    imageView.setImageBitmap(bm) ;
+
+                    inputStream.close() ;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         }
+
+
+
 
         setCancelable(false);
 
