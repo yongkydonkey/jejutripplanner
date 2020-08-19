@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                         parameters.putString("fields", "id,name,email,gender,birthday");
                         graphRequest.setParameters(parameters);
                         graphRequest.executeAsync();
-                        Intent intent = new Intent(LoginActivity.this, LoginSuccess.class);
+                        Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
                         intent.putExtra("id",userID);
                         LoginActivity.this.startActivity(intent);
                         finish();
